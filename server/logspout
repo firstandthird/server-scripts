@@ -1,0 +1,15 @@
+#!/bin/bash
+
+source lib/prompt.sh
+
+prompt "Name" "" "SERVER_NAME"
+prompt "Command" "" "CMD"
+
+docker run \
+  --name logspout \
+  -d \
+  --restart always \
+  --env SYSLOG_HOSTNAME=${SERVER_NAME}
+  --volume '/var/run/docker.sock:/var/run/docker.sock' \
+  gliderlabs/logspout \
+  $CMD
