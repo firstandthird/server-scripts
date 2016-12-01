@@ -1,0 +1,14 @@
+#!/bin/bash
+
+source lib/prompt.sh
+
+prompt "Slack Hook" "" "SLACK_HOOK"
+prompt "Virtual Host" "" "VIRTUAL_HOST"
+
+docker run \
+  -d \
+  --name docker-hub-slack \
+  -e SLACK_HOOK=$SLACK_HOOK \
+  -e VIRTUAL_HOST=$VIRTUAL_HOST \
+  -p 8080 \
+  firstandthird/docker-hub-slack:latest
