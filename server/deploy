@@ -7,7 +7,7 @@ prompt "Host" "" "HOST"
 prompt "Environment" "production" "DEPLOY_ENV"
 prompt "Github Username" "" "GITHUB_USER"
 prompt "Github Token" "" "GITHUB_TOKEN"
-prompt "Github Secret" "" "GITHUB_SECRET"
+prompt "Secret" "" "SECRET"
 prompt "Slack Webhook" "" "SLACK_HOOK"
 prompt "Lets Encrypt Email" "" "LETSENCRYPT_EMAIL"
 
@@ -22,7 +22,7 @@ docker run \
   --env DEPLOY_ENV=$DEPLOY_ENV \
   --env GH_USERNAME=$GITHUB_USER \
   --env GH_TOKEN=$GITHUB_TOKEN \
-  --env SECRET=$GITHUB_SECRET \
+  --env SECRET=$SECRET \
   --env SLACK=$SLACK_HOOK \
   --env SLACK_USER=Shipment/$SERVER_NAME \
   --env LETSENCRYPT_EMAIL=$LETSENCRYPT_EMAIL \
