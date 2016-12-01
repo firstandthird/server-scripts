@@ -1,0 +1,31 @@
+#!/bin/bash
+
+source lib/prompt.sh
+
+prompt "Server Name" "$HOSTNAME" "$SERVER_NAME"
+prompt "Host" "" "HOST"
+prompt "Environment" "production" "DEPLOY_ENV"
+prompt "Github Username" "" "GITHUB_USER"
+prompt "Github Token" "" "GITHUB_TOKEN"
+prompt "Github Secret" "" "GITHUB_SECRET"
+prompt "Slack Webhook" "" "SLACK_HOOK"
+prompt "Lets Encrypt Email" "" "LETSENCRYPT_EMAIL"
+
+docker run \
+  --name deploy \
+  -d \
+  -p 5000 \
+  --restart always \
+  --env VIRTUAL_HOST=deploy.$HOST \
+  --env LETSENCRYPT_HOST=deploy.$HOST \
+  --env DOMAIN=$HOST \
+  --env DEPLOY_ENV=$DEPLOY_ENV \
+  --env GH_USERNAME=$GITHUB_USER \
+  --env GH_TOKEN=$GITHUB_TOKEN \
+  --env SECRET=$GITHUB_SECRET \
+  --env SLACK=$SLACK_HOOK \
+  --env SLACK_USER=Shipment/$SERVER_NAME \
+  --env LETSENCRYPT_EMAIL=$LETSENCRYPT_EMAIL \
+  --env PORT=5000 \
+  --volume '/var/run/docker.sock:/var/run/docker.sock' \
+  shipment/deploy:0.0.23
