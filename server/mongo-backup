@@ -1,0 +1,20 @@
+#!/bin/bash
+
+source lib/prompt.sh
+
+prompt "Docker Mongo Container Name" "mongo" "MONGO_NAME"
+prompt "AWS Access Key" "" "AWS_ACCESS_KEY_ID"
+prompt "AWS Secret Key" "" "AWS_SECRET_ACCESS_KEY"
+prompt "S3 Bucket" "" "S3_BUCKET"
+prompt "Command" "backup" "CMD"
+prompt "Prefix" "" "PREFIX"
+
+
+docker run \
+  --rm \
+  --link $MONGO_NAME:mongo \
+  --env AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
+  --env AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+  --env S3BUCKET=$S3_BUCKET \
+  firstandthird/mongobackup-s3 \
+  $CMD
