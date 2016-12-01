@@ -1,0 +1,19 @@
+#!/bin/bash
+
+docker service create \
+  --name nginx \
+  -d \
+  --restart always \
+  --volume '/etc/nginx/conf.d' \
+  --volume '/etc/certs:/etc/nginx/certs:ro' \
+  --volume '/usr/share/nginx/html' \
+  --volume '/etc/nginx/vhost.d' \
+  firstandthird/nginx:0.0.1
+
+docker service create \
+  --name dockergen \
+  -d \
+  --restart always \
+  --volume '/var/run/docker.sock:/tmp/docker.sock:ro' \
+  --volumes-from nginx \
+  firstandthird/nginx-gen:0.0.5
