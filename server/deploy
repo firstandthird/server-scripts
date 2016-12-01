@@ -2,7 +2,7 @@
 
 source lib/prompt.sh
 
-prompt "Server Name" "$HOSTNAME" "$SERVER_NAME"
+prompt "Server Name" "$HOSTNAME" "SERVER_NAME"
 prompt "Host" "" "HOST"
 prompt "Environment" "production" "DEPLOY_ENV"
 prompt "Github Username" "" "GITHUB_USER"
