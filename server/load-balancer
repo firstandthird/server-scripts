@@ -3,6 +3,8 @@
 docker run \
   --name nginx \
   -d \
+  -p '80:80' \
+  -p '443:443' \
   --restart always \
   --volume '/etc/nginx/conf.d' \
   --volume '/etc/certs:/etc/nginx/certs:ro' \
