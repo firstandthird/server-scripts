@@ -1,0 +1,10 @@
+#!/bin/bash
+
+docker run \
+  -d \
+  --name mongo \
+  --restart always \
+  --volume '/data/db:/data/db' \
+  mongo:3.2
+
+
