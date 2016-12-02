@@ -1,6 +1,4 @@
 #!/bin/bash
 
-sudo apt-get update
-sudo apt-get install -y linux-image-extra-`uname -r`
 curl -sSL https://get.docker.com/ | sudo sh
 sudo usermod -aG docker ubuntu
