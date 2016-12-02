@@ -1,4 +1,5 @@
 #!/bin/bash
 
-sudo apt-get install make
-curl -sSL https://raw.githubusercontent.com/jgallen23/docker-extras/master/install.sh | sudo bash
+sudo su -
+apt-get install make
+curl -sSL https://raw.githubusercontent.com/jgallen23/docker-extras/master/install.sh | bash
