@@ -1,5 +1,4 @@
 #!/bin/bash
 
-sudo su -
-curl -sSL https://get.docker.com/ | sh
-usermod -aG docker ubuntu
+curl -sSL https://get.docker.com/ | sudo sh
+sudo usermod -aG docker ubuntu
