@@ -2,7 +2,9 @@
 
 source lib/prompt.sh
 
-prompt "How big?" "30" "SIZE"
+prompt "How big?" "30M" "SIZE"
+prompt "Container Name" "nginx" "CONTAINER"
 
-docker exec nginx echo "client_max_body_size $SIZE" > /etc/nginx/conf.d/size.conf
-docker kill -s SIGHUP nginx
+CMD="echo 'client_max_body_size $SIZE;' > /etc/nginx/conf.d/size.conf"
+docker exec $CONTAINER sh -c "${CMD}"
+docker kill -s SIGHUP $CONTAINER
