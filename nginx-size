@@ -1,0 +1,8 @@
+#!/bin/bash
+
+source lib/prompt.sh
+
+prompt "How big?" "30" "SIZE"
+
+docker exec nginx echo "client_max_body_size $SIZE" > /etc/nginx/conf.d/size.conf
+docker kill -s SIGHUP nginx
