@@ -1,0 +1,21 @@
+#!/bin/bash
+
+source $(dirname $0)/lib/prompt.sh
+
+prompt "Docker MYSQL Container Name" "mysql" "DB_NAME"
+prompt "AWS Access Key" "" "AWS_ACCESS_KEY_ID"
+prompt "AWS Secret Key" "" "AWS_SECRET_ACCESS_KEY"
+prompt "S3 Bucket" "" "S3_BUCKET"
+prompt "Prefix" "" "PREFIX"
+prompt "Command" "backup" "CMD"
+
+
+docker run \
+  --rm \
+  --link $DB_NAME:mysql \
+  --env AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
+  --env AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+  --env S3BUCKET=$S3_BUCKET \
+  --env FILEPREFIX=$PREFIX \
+  firstandthird/mysqlbackup-s3 \
+  $CMD
