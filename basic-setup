@@ -7,7 +7,7 @@ prompt "Host" "" "HOST"
 
 sudo apt-get update
 sudo apt-get htop
-bash server/authorized_keys $GITHUB_USER
-bash server/set-hostname $HOST
-bash server/install-docker
-bash server/install-docker-extras
+bash authorized_keys $GITHUB_USER
+bash set-hostname $HOST
+bash install-docker
+bash install-docker-extras
