@@ -12,10 +12,4 @@ docker run \
   --volume '/etc/nginx/vhost.d' \
   firstandthird/nginx:0.0.1
 
-docker run \
-  --name dockergen \
-  -d \
-  --restart always \
-  --volume '/var/run/docker.sock:/tmp/docker.sock:ro' \
-  --volumes-from nginx \
-  firstandthird/nginx-gen:0.0.5
+bash dockergen

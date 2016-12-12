@@ -1,0 +1,9 @@
+#!/bin/bash
+
+docker run \
+  --name dockergen \
+  -d \
+  --restart always \
+  --volume '/var/run/docker.sock:/tmp/docker.sock:ro' \
+  --volumes-from nginx \
+  firstandthird/nginx-gen:0.0.6
