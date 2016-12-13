@@ -1,0 +1,13 @@
+#!/bin/bash
+
+source $(dirname $0)/lib/prompt.sh
+
+prompt "Servers (comma separated)" "" "SERVERS"
+prompt "User" "ubuntu" "SSH_USER"
+prompt "Command" "" "CMD"
+
+servers=(${SERVERS//,/ })
+for i in "${!servers[@]}"; do
+  echo "running $CMD on ${servers[i]}..."
+  ssh $SSH_USER@${servers[i]} "$CMD"
+done
