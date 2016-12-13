@@ -15,7 +15,7 @@ prompt() {
       fi
       eval "$var=$default"
     else
-      eval "$var=$answer"
+      eval "$var='$answer'"
     fi
   fi
 
