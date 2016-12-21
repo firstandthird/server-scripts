@@ -1,10 +1,15 @@
 #!/bin/bash
 
+source $(dirname $0)/lib/prompt.sh
+
+prompt "Hostname" "$HOSTNAME" "NAME"
+
 docker run \
   -d \
   --cap-add SYS_PTRACE \
   -v /proc:/host/proc:ro \
   -v /sys:/host/sys:ro \
   -e VIRTUAL_HOST=netdata.* \
+  --hostname $NAME \
   --name netdata \
   titpetric/netdata
