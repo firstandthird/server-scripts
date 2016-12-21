@@ -1,6 +1,6 @@
 #!/bin/bash
 
-HOST=$1
+NEWHOST=$1
 
-cat $HOST > sudo /etc/hostname
+echo $NEWHOST > sudo /etc/hostname
 sudo hostname -F /etc/hostname
