@@ -1,10 +1,32 @@
 #!/bin/bash
 
+
+source $(dirname $0)/lib/prompt.sh
+
+prompt "Volume (- for none)" "/data/db" "VOLUME"
+if [[ "$VOLUME" == "-" ]]; then
+  VOLUME=""
+  echo "Not using a volume"
+fi
+prompt "Public (leave blank for private)" "" "PUBLIC" true
+prompt "Auth (1 for enable, blank for disable)" "" "AUTH" true
+if [[ -n "$AUTH" ]]; then
+  prompt "Username" "" "MONGO_USER"
+  prompt "Password" "" "MONGO_PASS"
+fi
+
+
+
 docker run \
   -d \
   --name mongo \
   --restart always \
-  --volume '/data/db:/data/db' \
-  mongo:3.2
+  ${VOLUME:+ --volume "${VOLUME}:/data/db"} \
+  ${PUBLIC:+ -p 27017:27017} \
+  mongo:3.2 \
+  ${AUTH:+ --auth}
 
+
+sleep 1
+docker exec mongo mongo admin --eval "db.createUser({ user: \"$MONGO_USER\", pwd: \"$MONGO_PASS\", roles: [ { role: \"root\", db: \"admin\" } ] });"
 
