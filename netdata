@@ -3,6 +3,8 @@
 source $(dirname $0)/lib/prompt.sh
 
 prompt "Hostname" "$HOSTNAME" "NAME"
+prompt "Slack Webhook for Alerts" "" "SLACK_HOOK" true
+prompt "Slack Channel for Alerts" "" "SLACK_CHANNEL" true
 
 docker run \
   -d \
@@ -11,6 +13,8 @@ docker run \
   -v /sys:/host/sys:ro \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -e VIRTUAL_HOST=netdata.* \
+  ${SLACK_HOOK:+ -e SLACK_WEBHOOK_URL=${SLACK_HOOK}} \
+  ${SLACK_CHANNEL:+ -e SLACK_CHANNEL=${SLACK_CHANNEL}} \
   --hostname $NAME \
   --name netdata \
-  titpetric/netdata
+  firstandthird/netdata
