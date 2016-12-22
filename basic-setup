@@ -6,7 +6,7 @@ prompt "Github User to give access" "" "GITHUB_USER"
 prompt "Host" "" "HOST"
 
 sudo apt-get update
-sudo apt-get htop
+sudo apt-get htop httpie
 bash authorize-github-user $GITHUB_USER
 bash set-hostname $HOST
 bash install-docker
