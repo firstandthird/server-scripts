@@ -7,7 +7,8 @@ prompt "AWS Access Key" "" "AWS_ACCESS_KEY_ID"
 prompt "AWS Secret Key" "" "AWS_SECRET_ACCESS_KEY"
 prompt "S3 Bucket" "" "S3_BUCKET"
 prompt "Command" "backup" "CMD"
-prompt "Prefix" "" "PREFIX"
+prompt "Prefix" "" "PREFIX" true
+prompt "Database" "" "DB" true
 
 
 docker run \
@@ -17,5 +18,6 @@ docker run \
   --env AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
   --env S3BUCKET=$S3_BUCKET \
   --env FILEPREFIX=$PREFIX \
+  ${DB:+ --env DB=${DB}} \
   firstandthird/mongobackup-s3 \
   $CMD
