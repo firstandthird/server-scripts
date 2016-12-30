@@ -2,5 +2,5 @@
 
 NEWHOST=$1
 
-sudo sh -c "echo $NEWHOST > sudo /etc/hostname"
+sudo sh -c "echo $NEWHOST > /etc/hostname"
 sudo hostname -F /etc/hostname
