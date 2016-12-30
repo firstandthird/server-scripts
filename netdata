@@ -6,6 +6,7 @@ prompt "Hostname" "$HOSTNAME" "NAME"
 prompt "Slack Webhook for Alerts" "" "SLACK_HOOK" true
 prompt "Slack Channel for Alerts" "" "SLACK_CHANNEL" true
 
+docker pull titpetric/netdata
 docker run \
   -d \
   --cap-add SYS_PTRACE \
@@ -17,4 +18,4 @@ docker run \
   ${SLACK_CHANNEL:+ -e SLACK_CHANNEL=${SLACK_CHANNEL}} \
   --hostname $NAME \
   --name netdata \
-  firstandthird/netdata
+  titpetric/netdata
