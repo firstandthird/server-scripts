@@ -2,12 +2,14 @@
 
 source lib/prompt.sh
 
-prompt "Github User to give access" "" "GITHUB_USER"
+prompt "Github User to give access" "" "GITHUB_USER" true
 prompt "Host" "" "HOST"
 
 sudo apt-get update
 sudo apt-get htop httpie
-bash authorize-github-user $GITHUB_USER
+if [[ -n "$GITHUB_USER" ]]; then
+  bash authorize-github-user $GITHUB_USER
+fi
 bash set-hostname $HOST
 bash install-docker
 bash install-docker-extras
