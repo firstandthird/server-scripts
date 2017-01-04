@@ -1,7 +1,9 @@
 #!/bin/bash
 
-IMAGE=jrcs/letsencrypt-nginx-proxy-companion
-  #alastaircoote/docker-letsencrypt-nginx-proxy-companion
+if [[ -z "$IMAGE" ]]; then
+  #IMAGE=jrcs/letsencrypt-nginx-proxy-companion
+  IMAGE=alastaircoote/docker-letsencrypt-nginx-proxy-companion
+fi
 
 docker pull $IMAGE
 
