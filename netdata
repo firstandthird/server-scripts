@@ -14,6 +14,7 @@ docker run \
   -v /sys:/host/sys:ro \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -e VIRTUAL_HOST=netdata.* \
+  -e LOGSPOUT=ignore \
   ${SLACK_HOOK:+ -e SLACK_WEBHOOK_URL=${SLACK_HOOK}} \
   ${SLACK_CHANNEL:+ -e SLACK_CHANNEL=${SLACK_CHANNEL}} \
   --hostname $NAME \
