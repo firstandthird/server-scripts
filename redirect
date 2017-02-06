@@ -1,0 +1,15 @@
+#!/bin/bash
+
+source $(dirname $0)/lib/prompt.sh
+
+prompt "Redirect From" "" "FROM"
+prompt "Redirect To" "" "TO"
+prompt "Name" "" "NAME"
+
+docker pull firstandthird/redirect
+docker run -d \
+  --name $NAME \
+  -e VIRTUAL_HOST=$FROM \
+  -e LETSENCRYPT_HOST=$FROM \
+  -e LETSENCRYPT_EMAIL=$NAME@firstandthird.com \
+  firstandthird/redirect $TO
