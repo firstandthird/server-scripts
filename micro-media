@@ -1,0 +1,32 @@
+#!/bin/bash
+
+
+source $(dirname $0)/lib/prompt.sh
+
+prompt "AWS Acccess Key" "" "AWS_ACCESS_KEY_ID"
+prompt "AWS Secret Key" "" "AWS_SECRET_ACCESS_KEY"
+prompt "S3 Bucket" "" "AWS_BUCKET"
+prompt "Quality" "" "QUALITY" true
+prompt "Folder" "" "FOLDER" true
+prompt "Set Public On Upload (1/0)" "1" "PUBLIC"
+prompt "CDN Host" "" "CDNHOST" true
+
+IMAGE=firstandthird/micro-media:latest
+
+docker pull $IMAGE
+
+docker run \
+  -d \
+  --name media \
+  --restart always \
+  -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
+  -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+  -e AWS_BUCKET=$AWS_BUCKET \
+  -e VIRTUAL_HOST="media.*" \
+  -p 8080 \
+  ${QUALITY:+ -e QUALITY=${QUALITY}} \
+  ${FOLDER:+ -e FOLDER=${FOLDER}} \
+  ${CDNHOST:+ -e S3_HOST=${CDNHOST}} \
+  ${PUBLIC:+ -e PUBLIC=${PUBLIC}} \
+  $IMAGE
+
