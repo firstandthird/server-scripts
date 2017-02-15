@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [[ "$1" == "swarm" ]]; then
+  docker service create \
+    --name registry \
+    --publish 5000:5000 \
+    --constraint 'node.role == manager' \
+    --mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
+    registry:2 \
+else
+  docker run -d -p 5000:5000 --name registry registry:2
+fi
+
