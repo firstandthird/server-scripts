@@ -4,12 +4,23 @@ source lib/prompt.sh
 
 prompt "Name" "" "SERVER_NAME"
 prompt "Command" "" "CMD"
+prompt "Swarm Mode (0/1)" "0" "SWARM"
 
-docker run \
-  --name logspout \
-  -d \
-  --restart always \
-  --env SYSLOG_HOSTNAME=${SERVER_NAME} \
-  --volume '/var/run/docker.sock:/var/run/docker.sock' \
-  gliderlabs/logspout \
-  $CMD
+if [[ "$SWARM" == 0 ]]; then
+  docker run \
+    --name logspout \
+    -d \
+    --restart always \
+    --env SYSLOG_HOSTNAME=${SERVER_NAME} \
+    --volume '/var/run/docker.sock:/var/run/docker.sock' \
+    gliderlabs/logspout \
+    $CMD
+else
+  docker service create \
+    --name logspout \
+    --mode global \
+    --env SYSLOG_HOSTNAME=${SERVER_NAME} \
+    --mount "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock" \
+    -e SYSLOG_FORMAT=rfc3164 \
+    gliderlabs/logspout $CMD
+fi
