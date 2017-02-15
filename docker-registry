@@ -1,13 +1,31 @@
 #!/bin/bash
 
-if [[ "$1" == "swarm" ]]; then
-  docker service create \
-    --name registry \
-    --publish 5000:5000 \
-    --constraint 'node.role == manager' \
-    --mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
-    registry:2 \
-else
-  docker run -d -p 5000:5000 --name registry registry:2
+CMD="run -d"
+
+source lib/prompt.sh
+
+prompt "Swarm Mode (0/1)" "0" "SWARM"
+prompt "AWS Access Key" "" "ACCESS_KEY"
+prompt "AWS Secret Key" "" "SECRET_KEY"
+prompt "AWS Region" "" "REGION"
+prompt "AWS Bucket" "" "BUCKET"
+
+
+if [[ "$SWARM" == "1" ]]; then
+  CMD="service create"
 fi
+
+docker $CMD \
+  --name registry \
+  --label "registry" \
+  --publish 5000:5000 \
+  --env REGISTRY_STORAGE=s3 \
+  --env REGISTRY_STORAGE_S3_ACCESSKEY=$ACCESS_KEY \
+  --env REGISTRY_STORAGE_S3_SECRETKEY=$SECRET_KEY \
+  --env REGISTRY_STORAGE_S3_REGION=$REGION \
+  --env REGISTRY_STORAGE_S3_BUCKET=$BUCKET \
+  --env REGISTRY_STORAGE_S3_V4AUTH=true \
+  --env REGISTRY_STORAGE_S3_REDIRECT_DISABLE=true \
+  --env REGISTRY_STORAGE_S3_SECURE=true \
+  registry:2
 
