@@ -17,7 +17,7 @@ docker pull $IMAGE
 
 docker inspect media 2> /dev/null
 
-if [[ "$?" == 1 ]]; then
+if [[ "$?" == 0 ]]; then
   docker stop media
   docker rm media
 fi
