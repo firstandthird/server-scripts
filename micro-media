@@ -15,6 +15,13 @@ IMAGE=firstandthird/micro-media:latest
 
 docker pull $IMAGE
 
+docker inspect media 2> /dev/null
+
+if [[ "$?" == 1 ]]; then
+  docker stop media
+  docker rm media
+fi
+
 docker run \
   -d \
   --name media \
