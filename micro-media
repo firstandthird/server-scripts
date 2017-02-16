@@ -30,6 +30,7 @@ docker run \
   -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
   -e AWS_BUCKET=$AWS_BUCKET \
   -e VIRTUAL_HOST="media.*" \
+  -e NODE_ENV="production" \
   -p 8080 \
   ${QUALITY:+ -e QUALITY=${QUALITY}} \
   ${FOLDER:+ -e FOLDER=${FOLDER}} \
