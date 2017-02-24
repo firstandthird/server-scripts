@@ -1,5 +1,12 @@
 #!/bin/bash
 
+docker inspect nginx > /dev/null 2>&1
+
+if [[ "$?" == 0 ]]; then
+  docker stop nginx
+  docker rm nginx
+fi
+
 docker run \
   --name nginx \
   -d \
@@ -10,6 +17,6 @@ docker run \
   --volume '/etc/certs:/etc/nginx/certs:ro' \
   --volume '/usr/share/nginx/html' \
   --volume '/etc/nginx/vhost.d' \
-  firstandthird/nginx:0.0.1
+  firstandthird/nginx:0.0.3
 
 bash dockergen

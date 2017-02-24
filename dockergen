@@ -1,5 +1,12 @@
 #!/bin/bash
 
+docker inspect dockergen > /dev/null 2>&1
+
+if [[ "$?" == 0 ]]; then
+  docker stop dockergen
+  docker rm dockergen
+fi
+
 docker run \
   --name dockergen \
   -d \
