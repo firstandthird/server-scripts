@@ -1,8 +1,14 @@
 #!/bin/bash
 
-source ../lib/prompt.sh
+source lib/prompt.sh
 
 prompt "Domain" "" "DOMAIN"
+
+docker network inspect traefik-net > /dev/null 2>&1
+if [[ "$?" == 1 ]]; then
+  echo "Creating network"
+  docker network create --driver=overlay traefik-net
+fi
 
 docker service create \
   --name traefik \
