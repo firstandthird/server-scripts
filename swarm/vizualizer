@@ -1,0 +1,11 @@
+#!/bin/bash
+
+docker service create \
+  --name=viz \
+  --publish=8080/tcp \
+  --constraint=node.role==manager \
+  --network traefik-net \
+  --label "traefik.frontend.rule=Host:viz.*" \
+  --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
+  -e LOGSPOUT=ignore \
+  manomarks/visualizer
